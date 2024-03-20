@@ -1,0 +1,4 @@
+- 修改read_data/path_to_data.py中的相对路径为自己电脑上的路径
+- 在mysql中创建数据库
+- 修改sql_engine.py中的数据库配置
+- 运行read_data/main.py
