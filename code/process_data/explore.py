@@ -17,9 +17,9 @@ def sample(tableName:str, print_:bool=True, amount:int=1):
 
 if __name__ == "__main__":
     df = sample(tables[0],False,2)
+    data = []
     for col in df.columns:
-        print(df[col].name,df[col].dtype,df[col][0])
-    # describe = df.describe()
-    # for col in describe.columns:
-    #     print(describe[col])
+        data.append(list(map(str,(df[col].name,df[col].dtype,df[col][0]))))
+    from html_table import plot_table
+    plot_table(data)
     ...

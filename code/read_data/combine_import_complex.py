@@ -8,13 +8,15 @@ def hui4yuan2ji1fen1ye4tai4biao3():
     files = os.listdir(f"{path_to_data}/会员积分业态表/")
     dfs = []
     for idx,file in enumerate(files):
-        print(file,f"({idx+1}/{len(files)})")
-        df = pd.read_excel(f"{path_to_data}/会员积分业态表/{file}")
-        dfs.append(df)
+        if "DS_Store" not in file:
+            print(file,f"({idx+1}/{len(files)})")
+            df = pd.read_excel(f"{path_to_data}/会员积分业态表/{file}")
+            dfs.append(df)
     dfs:pd.DataFrame = pd.concat(dfs)
     dfs = dfs.reset_index().drop("index",axis=1)
     types = "datetime64[ns] category category category category int16 int16"
     dfs = dfs.astype(dict(zip(df.columns, types.split())))
+    dfs.replace([float('inf'), float('-inf')], [9999, -9999], inplace=True)
     return dfs
 # 会员积分明细报表
 def hui4yuan2ji1fen1ming2xi4bao4biao3():
@@ -25,14 +27,16 @@ def hui4yuan2ji1fen1ming2xi4bao4biao3():
         path_ = path.format(type)
         files = os.listdir(path_)
         for idx,file in enumerate(files):
-            print(f"{path_}{file}",f"({idx+1}/{len(files)})")
-            df = pd.read_excel(f"{path_}{file}")
-            df["积分方式"] = type
-            dfs.append(df)
+            if "DS_Store" not in file:
+                print(f"{path_}{file}",f"({idx+1}/{len(files)})")
+                df = pd.read_excel(f"{path_}{file}")
+                df["积分方式"] = type
+                dfs.append(df)
     dfs:pd.DataFrame = pd.concat(dfs)
     dfs = dfs.reset_index().drop("index",axis=1)
     types = "category category category datetime64[ns] timedelta64[ns] category category int16 float16 int16 category category category "
     dfs = dfs.astype(dict(zip(df.columns, types.split())))
+    dfs.replace([float('inf'), float('-inf')], [9999, -9999], inplace=True)
     return dfs
 def main(engine):
     hui4yuan2ji1fen1ye4tai4biao3().to_sql("会员积分业态表", con=engine, if_exists='replace', index=False)

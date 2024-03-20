@@ -39,14 +39,16 @@ def get_dfs(parentPath:str)->pd.DataFrame:
     yearAndPath = get_year_and_path(parentPath)
     dfs = []
     for idx,(year,path) in enumerate(yearAndPath):
-        print(f"{path}({idx+1}/{len(yearAndPath)})")
-        dfs.append(handle_one_record(path,year))
+        if "DS_Store" not in path:
+            print(f"{path}({idx+1}/{len(yearAndPath)})")
+            dfs.append(handle_one_record(path,year))
     dfs:pd.DataFrame = pd.concat(dfs)
     return dfs
 def main(engine):
     dfs = get_dfs(f"{path_to_data}/客流/")
     dfs = dfs.reset_index().drop("index",axis=1)
     dfs = dfs.astype(dict(zip(dfs.columns, "int16 int16 int16 int16 datetime64[ns]".split())))
+    dfs.replace([float('inf'), float('-inf')], [9999, -9999], inplace=True)
     dfs.to_sql("客流", con=engine, if_exists='replace', index=False)
 if __name__ == "__main__":
     from sql_engine import engine
