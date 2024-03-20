@@ -34,7 +34,7 @@ def hui4yuan2ji1fen1ming2xi4bao4biao3():
                 dfs.append(df)
     dfs:pd.DataFrame = pd.concat(dfs)
     dfs = dfs.reset_index().drop("index",axis=1)
-    types = "category category category datetime64[ns] timedelta64[ns] category category int16 float16 int16 category category category "
+    types = "category category category datetime64[ns] timedelta64[ns] category category int16 float16 int16 category category category"
     dfs = dfs.astype(dict(zip(df.columns, types.split())))
     dfs.replace([float('inf'), float('-inf')], [9999, -9999], inplace=True)
     return dfs
