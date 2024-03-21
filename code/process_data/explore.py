@@ -17,12 +17,14 @@ def sample(tableName:str, print_:bool=True, amount:int=1):
     return df
 
 if __name__ == "__main__":
-    table = tables[0]
-    df = sample(table,False,2)
-    df = df.astype(dict(zip(df.columns, dic[table].split())))
     data = []
-    for col in df.columns:
-        data.append(list(map(str,(df[col].name,df[col].dtype,df[col][0]))))
+    for table in tables:
+        print(table)
+        df = sample(table,False,2)
+        df = df.astype(dict(zip(df.columns, dic[table].split())))
+        data.append(["x","x",table])
+        for col in df.columns:
+            data.append(list(map(str,(df[col].name,df[col].dtype,df[col][0]))))
     from html_table import plot_table
     plot_table(data)
     ...
