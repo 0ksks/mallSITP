@@ -28,7 +28,7 @@ class Autoencoder(pl.LightningModule):
                 hiddenDim = inputDim
             encoder = [nn.Linear(inputDim,hiddenDim),nn.ReLU()]
             encoder += [nn.Linear(hiddenDim,hiddenDim),nn.ReLU()]*(layers-2)
-            encoder += [nn.Linear(hiddenDim,compressDim),nn.ReLU()]
+            encoder += [nn.Linear(hiddenDim,compressDim),nn.Sigmoid()]
             decoder = [nn.Linear(compressDim,hiddenDim),nn.ReLU()]
             decoder += [nn.Linear(hiddenDim,hiddenDim),nn.ReLU()]*(layers-2)
             decoder += [nn.Linear(hiddenDim,inputDim)]

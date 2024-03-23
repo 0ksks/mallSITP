@@ -6,8 +6,8 @@ def get_dataloader(dataset, batch_size, shuffle=True):
 def train_unit(layers,max_epochs,type:Literal["tri","rec"],hiddenDim=None,lr=1e-3):
     from autoencoder import Autoencoder
     model = Autoencoder(6,2,layers,type,lr,hiddenDim)
-    save_dir = "code/AAE_adversarial_autoencoder"
-    trainer = Trainer(max_epochs=max_epochs,  log_every_n_steps=50, logger=loggers.TensorBoardLogger(save_dir=save_dir,version=f"(lay,hid)=({layers},{hiddenDim})"))
+    save_dir = "code/AE"
+    trainer = Trainer(max_epochs=max_epochs,  log_every_n_steps=50, logger=loggers.TensorBoardLogger(save_dir=save_dir,version=f"(lay,hid)=({layers},{hiddenDim})_sigmoid"))
     trainer.fit(model, dataloader)
 if __name__ == "__main__":
     from datasets import AEDataset
@@ -21,5 +21,5 @@ if __name__ == "__main__":
     
     
 '''
-tensorboard --logdir=code/AAE_adversarial_autoencoder/lightning_logs
+tensorboard --logdir=code/AE/lightning_logs
 '''
