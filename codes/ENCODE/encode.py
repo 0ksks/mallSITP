@@ -1,12 +1,12 @@
 import torch
 def get_encoded()->torch.Tensor:
     import sys
-    sys.path.append("/Users/admin/Desktop/商场sitp/ori/code")
+    sys.path.append("/Users/admin/Desktop/商场sitp/ori/codes")
     from AE.autoencoder import Autoencoder
     from AE.datasets import AEDataset
     print("loading model")
     ae = Autoencoder.load_from_checkpoint(
-        "code/AE/lightning_logs/(lay,hid)=(5,64)_sigmoid/checkpoints/epoch=187-step=15792.ckpt",
+        "codes/AE/lightning_logs/(lay,hid)=(5,64)_sigmoid/checkpoints/epoch=187-step=15792.ckpt",
         inputDim=6,
         compressDim=2,
         layers=5,

@@ -11,6 +11,9 @@ class Norm:
     def denormalizer(self,input:DataFrame)->DataFrame:
         output = input*self.std+self.mean
         return output
+    def normalizer(self,input:DataFrame)->DataFrame:
+        norm = (input - self.mean)/self.std
+        return norm
     
 
 class AEDataset(Dataset):
