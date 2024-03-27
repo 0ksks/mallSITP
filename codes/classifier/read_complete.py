@@ -13,10 +13,12 @@ def get_encoder():
         hiddenDim=64
     )
     return ae
-def get_encode_range(data):
+def get_encode_range(data,range_=range(-3,3,10)):
+    import numpy as np
+    from torch import Tensor
     encodes = []
     ae = get_encoder()
-    for r in ye4tai4range:
+    for r in range_:
         data[-1]=r
         encodes.append(ae(Tensor(data)).detach().numpy())
     return np.array(encodes)
@@ -24,11 +26,13 @@ def get_ori_data():
     import sys
     sys.path.append("/Users/admin/Desktop/商场sitp/ori/codes")
     from ENCODE.encode import get_encoded,tensor2points
-    return tensor2points(get_encoded())
+    print("loading points and labels")
+    import numpy as np
+    labels = np.load("codes/ENCODE/cluster/second/labels/73_(1.20e-02,120).npy")
+    return {"points":tensor2points(get_encoded()),"labels":labels}
 if __name__ == "__main__":
     from read_incomplete import get_uni_inc
     import numpy as np
-    from torch import Tensor
     ye4tai4range = np.linspace(-3,3,100)
     data = get_uni_inc().values[0]
     unk = get_encode_range(data)

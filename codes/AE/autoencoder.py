@@ -34,7 +34,8 @@ class Autoencoder(pl.LightningModule):
             decoder += [nn.Linear(hiddenDim,inputDim)]
         self.encoder = nn.Sequential(*encoder)
         self.decoder = nn.Sequential(*decoder)
-    def forward(self,input):
+    def forward(self,input:torch.Tensor):
+        input = input.to(torch.float)
         encoded = self.encoder(input)
         return encoded
     def training_step(self, batch, batch_idx):
