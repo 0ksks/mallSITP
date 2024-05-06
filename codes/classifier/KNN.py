@@ -42,6 +42,7 @@ def get_knn():
     return knn
 
 def gen_grid(arr,range_=(-3,3,10)):
+    arr = arr.astype(np.float64)
     def gen_probability(range_):
         start,end,amount = range_
         offset = (end-start)/(amount-1)/2
@@ -100,14 +101,20 @@ if __name__ == "__main__":
     from classifier.read_incomplete import get_uni_inc,get_bi_inc
     import pandas as pd
     
-    # data1 = get_uni_inc()
-    # predX1,labels1 = pred_by_grid(data1.values,range_=(-3,3,100))
-    # data1 = pd.DataFrame(predX1,columns=data1.columns)
-    # data1["label"] = labels1
-    # data1.to_csv("codes/classifier/data/uni_inc.csv",index=False)
+    data1 = get_uni_inc()
+    pk1 = data1["PK"]
+    data1 = data1.drop("PK",axis=1)
+    predX1,labels1 = pred_by_grid(data1.values,range_=(-3,3,100))
+    data1 = pd.DataFrame(predX1,columns=data1.columns)
+    data1["label"] = labels1
+    data1["PK"] = pk1.values
+    data1.to_csv("codes/classifier/data/uni_inc.csv",index=False)
     
     data2 = get_bi_inc()
+    pk2 = data2["PK"]
+    data2 = data2.drop("PK",axis=1)
     predX2,labels2 = pred_by_grid(data2.values,range_=(-3,3,100))
     data2 = pd.DataFrame(predX2,columns=data2.columns)
     data2["label"] = labels2
+    data2["PK"] = pk2.values
     data2.to_csv("codes/classifier/data/bi_inc.csv",index=False)
