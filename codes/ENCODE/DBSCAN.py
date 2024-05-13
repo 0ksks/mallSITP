@@ -16,29 +16,27 @@ def plot_elbow(k, points):
 
 if __name__ == "__main__":
     import time
-
-    points = get_encoded().detach().numpy()
-    # 0.00-0.02
-    # plot_elbow(4,points)
     from sklearn.cluster import dbscan
     from itertools import product
     import numpy as np
     import os
     import matplotlib.pyplot as plt
 
-    stepMinPts = 10
-    epsL = 4
-    epsR = np.linspace(0.009, 0.012, epsL)
-    minPtsR = range(100, 200, stepMinPts)
-    
-    grids = product(epsR, minPtsR)
-    minPtsL = len(list(minPtsR))
+    minPtsStep = 10
+    epsLen = 4
+    epsRange = np.linspace(0.009, 0.012, epsLen)
+    minPtsRange = range(100, 200, minPtsStep)
+    # 网格搜索的精度
+
+    grids = product(epsRange, minPtsRange)
+    minPtsLen = len(list(minPtsRange))
+    points = get_encoded().detach().numpy()
 
     start = time.time()
     for idx, (eps, minPts) in enumerate(grids):
         end = time.time()
         print(
-            f"{eps:.2e} {minPts} ({idx+1}/{epsL*minPtsL}) running {round(end-start,3)}"
+            f"{eps:.2e} {minPts} ({idx+1}/{epsLen*minPtsLen}) running {round(end-start,3)}"
         )
         _, labels = dbscan(points, eps=eps, min_samples=minPts, metric="euclidean")
         dirfig = "code/ENCODE/cluster/second/figs"
