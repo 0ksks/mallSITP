@@ -1,7 +1,7 @@
 import torch
 def get_encoded()->torch.Tensor:
     import sys
-    sys.path.append("/Users/admin/Desktop/商场sitp/ori/codes")
+    sys.path.append("/Users/admin/Desktop/LEARN/商场sitp/ori/codes")
     from AE.autoencoder import Autoencoder
     from AE.datasets import AEDataset
     print("loading model")
